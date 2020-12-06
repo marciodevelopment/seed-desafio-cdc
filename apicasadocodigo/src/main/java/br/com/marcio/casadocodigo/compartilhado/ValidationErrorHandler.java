@@ -2,6 +2,8 @@ package br.com.marcio.casadocodigo.compartilhado;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -26,7 +28,19 @@ public class ValidationErrorHandler {
 		List<FieldError> fieldErros = exception.getBindingResult().getFieldErrors();
 		return buildValidationErrors(globalErrors, fieldErros);
 	}
+	
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ExceptionHandler(EntityNotFoundException.class)
+	public ValidationErrosOutputDto handleEntityNotFoundException(EntityNotFoundException exception) {
+		return buildValidationErrors(exception.getMessage());
+	}
 
+	private ValidationErrosOutputDto buildValidationErrors(String message) {
+		ValidationErrosOutputDto validationErros = new ValidationErrosOutputDto();
+		validationErros.addError(message);
+		return validationErros;
+	}
+	
 	private ValidationErrosOutputDto buildValidationErrors(List<ObjectError> globalErrors, List<FieldError> fieldErros) {
 		ValidationErrosOutputDto validationErros = new ValidationErrosOutputDto();
 		globalErrors.forEach(error -> validationErros.addError(getErrorMessage(error)));

@@ -1,28 +1,31 @@
-package br.com.marcio.casadocodigo.categoria;
+package br.com.marcio.casadocodigo.pais;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
+import lombok.Getter;
 import lombok.ToString;
 
 @ToString
+@Getter
 @Entity
-public class Categoria {
-
+public class Pais {
 	@Id
 	@GeneratedValue
 	private Long id;
-	@Column(unique=true) 
-	private @NotBlank @Size(max = 255) String nome;
-
-	protected Categoria() {}
+	@Column(unique = true)
+	@NotBlank(message = "Nome")
+	private String nome;
 	
-	public Categoria(@NotBlank @Size(max = 255) String nome) {
+	protected Pais() {
+		
+	}
+	
+	public Pais(@NotBlank(message = "Nome") String nome) {
 		this.nome = nome;
 	}
-
+	
 }

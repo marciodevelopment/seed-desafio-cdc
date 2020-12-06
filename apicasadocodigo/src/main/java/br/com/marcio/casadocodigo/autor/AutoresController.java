@@ -18,8 +18,6 @@ public class AutoresController {
 	
 	
 	@PostMapping(value = "/autores")
-	// AutorResponse -> 2
-	// autorRequest  -> 3
 	public AutorResponse postMethodName(@Valid @RequestBody AutorRequest autorRequest) {
 		Autor novoAutor = autorRequest.toEntity();
 		autorRepository.save(novoAutor);
