@@ -26,8 +26,8 @@ public class LivrosController {
 
 	// LivroRequest -> 4
 	@PostMapping(value = "livros")
-	public void novoLivro(@RequestBody @Valid LivroRequest livro) {
-		Livro novoLivro = livro.toEntity(livro, autorRepository, categoriaRepository);
+	public void novoLivro(@RequestBody @Valid NovoLivroRequest livro) {
+		Livro novoLivro = livro.toEntity(autorRepository, categoriaRepository);
 		livroRepository.save(novoLivro);
 	}
 

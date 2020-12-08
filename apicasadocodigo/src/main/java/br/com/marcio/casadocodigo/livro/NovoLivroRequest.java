@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.EntityNotFoundException;
-import javax.validation.Valid;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -18,12 +17,14 @@ import br.com.marcio.casadocodigo.autor.AutorRepository;
 import br.com.marcio.casadocodigo.categoria.Categoria;
 import br.com.marcio.casadocodigo.categoria.CategoriaRepository;
 import br.com.marcio.casadocodigo.compartilhado.annotation.UniqueValue;
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@AllArgsConstructor
 @Setter
 @ToString
-public class LivroRequest {
+public class NovoLivroRequest {
 	@NotBlank
 	@Size(max = 255)
 	@UniqueValue(domainClass = Livro.class, fieldName = "titulo", message = "Já existe um livro cadastrado com este título.")
@@ -51,8 +52,7 @@ public class LivroRequest {
 	@NotNull
 	private Long idAutor;
 
-	public Livro toEntity(@Valid LivroRequest livro, AutorRepository autorRepository,
-			CategoriaRepository categoriaRepository) {
+	public Livro toEntity(AutorRepository autorRepository, CategoriaRepository categoriaRepository) {
 		Autor autor = autorRepository
 				.findById(idAutor)
 				.orElseThrow(() -> new EntityNotFoundException("Não há autor cadastrado para o id enviado: " + this.idAutor));
@@ -62,6 +62,5 @@ public class LivroRequest {
 				.orElseThrow(() -> new EntityNotFoundException("Não há categoria cadastrado para o id enviado: " + this.idCategoria));
 		
 		return new Livro(titulo, resumo, sumario, preco, numeroPaginas, isbn, dataPublicacao, categoria, autor);
-
 	}
 }

@@ -18,10 +18,14 @@ import br.com.marcio.casadocodigo.cupom.CupomValido;
 import br.com.marcio.casadocodigo.estado.Estado;
 import br.com.marcio.casadocodigo.estado.EstadoPais;
 import br.com.marcio.casadocodigo.pais.Pais;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @ToString
 public class NovaCompraRequest implements EstadoPais, CupomValido{
